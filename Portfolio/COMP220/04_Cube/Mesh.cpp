@@ -20,6 +20,19 @@ Mesh::~Mesh()
 		glDeleteBuffers(1, &m_normalBuffer);
 }
 
+void Mesh::addVertex(const Vertex& vertex)
+{
+	if (m_positionBuffer != 0)
+	{
+		throw std::exception("Cannot add vertices after createBuffers() has been called");
+	}
+
+	m_vertexPositions.push_back(vertex.m_position);
+	m_vertexColours.push_back(vertex.m_colour);
+	m_vertexUVs.push_back(vertex.m_textureCoord);
+	m_vertexNormals.push_back(vertex.m_normal);
+}
+
 void Mesh::addTriangleVertex(Vertex v1, Vertex v2, Vertex v3)
 {
 	glm::vec3 normal = glm::cross(v2.m_position - v1.m_position, v3.m_position - v1.m_position);
@@ -36,8 +49,8 @@ void Mesh::addTriangleVertex(Vertex v1, Vertex v2, Vertex v3)
 
 void Mesh::addSquareVertex(Vertex v1, Vertex v2, Vertex v3, Vertex v4)
 {
-	addTriangleVertex(v1, v2, v3);
-	addTriangleVertex(v1, v3, v2);
+	addTriangleVertex(v1, v2, v4);
+	addTriangleVertex(v1, v3, v4);
 }
 
 void Mesh::addTriangle(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3,

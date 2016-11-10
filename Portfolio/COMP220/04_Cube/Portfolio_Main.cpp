@@ -179,7 +179,7 @@ int main(int argc, char* args[])
 	Mesh mesh;
 	PerlinNoise perlinNoise;
 
-	mesh.addCylinder(glm::vec3(0, 2, 0), 1, 24, -2, glm::vec3(1, 0, 0));
+	//mesh.addCylinder(glm::vec3(0, 2, 0), 1, 24, -2, glm::vec3(1, 0, 0));
 	
 
 	
@@ -201,11 +201,20 @@ int main(int argc, char* args[])
 	int noiseMin = 0;
 	int y = 0;
 
-	mesh.addSquareVertex(glm::vec3(0, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 1), glm::vec3(0, 0, 1));
+	for (int x = 0; x < chunkSize; x++)
+	{
+		for (int z = 0; z < chunkSize; z++)
+		{
+			float SquareSize = 0.5f;
 
+			
+			mesh.addSquareVertex(glm::vec3(x, 0, z), glm::vec3(x + 1, 0, z), glm::vec3(x + 1, 0, z + 1), glm::vec3(x, 0, z + 1));
+		}
+	}
 	// Amplification(the lower the number the higher the amplification)
 	float noiseAmplification = 100.0;
 
+	/*
 	for (int x = 0; x < chunkSize; x++)
 	{
 		for (int z = 0; z < chunkSize; z++)
@@ -246,6 +255,7 @@ int main(int argc, char* args[])
 			mesh.addCube(a, b, c, d, e, f, g, h, colour);
 		}
 	}
+	*/
 	mesh.createBuffers();
 	GLuint programID = loadShaders("vertex.glsl", "fragment.glsl");
 	GLuint mvpLocation = glGetUniformLocation(programID, "mvp");
@@ -271,9 +281,9 @@ int main(int argc, char* args[])
 	//glEnable(GL_LIGHTING);
 	
 
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
-	glm::vec4 playerPosition(50, 50, 50, 1);
+	glm::vec4 playerPosition(1, 1, 1, 1);
 	float playerPitch = 0;
 	float playerYaw = 0;
 
