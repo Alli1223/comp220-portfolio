@@ -196,10 +196,12 @@ int main(int argc, char* args[])
 	// The grounds colour Variable
 	glm::vec3 colour = glm::vec3(0,0,0);
 
-	int chunkSize = 100; // Max 700 squares ~3M
+	int chunkSize = 10; // Max 700 squares ~3M
 	int noiseMax = 3;
 	int noiseMin = 0;
 	int y = 0;
+
+	mesh.addSquareVertex(glm::vec3(0, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 1), glm::vec3(0, 0, 1));
 
 	// Amplification(the lower the number the higher the amplification)
 	float noiseAmplification = 100.0;

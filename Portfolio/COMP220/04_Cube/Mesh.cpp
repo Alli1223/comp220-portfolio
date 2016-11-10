@@ -21,6 +21,24 @@ Mesh::~Mesh()
 }
 
 void Mesh::addTriangleVertex(Vertex v1, Vertex v2, Vertex v3)
+{
+	glm::vec3 normal = glm::cross(v2.m_position - v1.m_position, v3.m_position - v1.m_position);
+	normal = glm::normalize(normal);
+
+	v1.m_normal = normal;
+	v2.m_normal = normal;
+	v3.m_normal = normal;
+
+	addVertex(v1);
+	addVertex(v2);
+	addVertex(v3);
+}
+
+void Mesh::addSquareVertex(Vertex v1, Vertex v2, Vertex v3, Vertex v4)
+{
+	addTriangleVertex(v1, v2, v3);
+	addTriangleVertex(v1, v3, v2);
+}
 
 void Mesh::addTriangle(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3,
 	const glm::vec3& colour,

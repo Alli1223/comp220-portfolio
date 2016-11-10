@@ -16,9 +16,6 @@ uniform vec3 lightPos;
 // TODO: calculate distance
 uniform float distance;
 
-
-
-
 out vec4 fragmentColour;
 
 void main()

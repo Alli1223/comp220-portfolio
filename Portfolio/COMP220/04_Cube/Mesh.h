@@ -10,6 +10,9 @@ public:
 	// Triangle made from vertex class
 	void addTriangleVertex(Vertex v1, Vertex v2, Vertex v3);
 
+	// Square made from vertex class
+	void addSquareVertex(Vertex v1, Vertex v2, Vertex v3, Vertex v4);
+
 	// Old triangle function
 	void addTriangle(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3,
 		const glm::vec3& colour,
