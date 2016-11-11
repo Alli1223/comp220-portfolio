@@ -196,23 +196,44 @@ int main(int argc, char* args[])
 	// The grounds colour Variable
 	glm::vec3 colour = glm::vec3(0,0,0);
 
-	int chunkSize = 10; // Max 700 squares ~3M
-	int noiseMax = 3;
+	int chunkSize = 100; // Max 700 squares ~3M
+	int noiseMax = 1;
 	int noiseMin = 0;
 	int y = 0;
+	float SquareSize = 0.5f;
+	
+	std::vector<int> Y, X, Z;
+
+	// Amplification(the lower the number the higher the amplification)
+	float noiseAmplification = 100.0;
 
 	for (int x = 0; x < chunkSize; x++)
 	{
 		for (int z = 0; z < chunkSize; z++)
 		{
-			float SquareSize = 0.5f;
-
 			
-			mesh.addSquareVertex(glm::vec3(x, 0, z), glm::vec3(x + 1, 0, z), glm::vec3(x + 1, 0, z + 1), glm::vec3(x, 0, z + 1));
+			double perlinResultY = perlinNoise.noise((x / noiseAmplification), (z / noiseAmplification), y);
+
+			//Normalize values
+			
+			Z.push_back(z);
+			y = (char)((perlinResultY - noiseMin) * (255 / (noiseMax - noiseMin)));
+			Y.push_back(y);
+		}
+		X.push_back(x);
+	}
+
+
+	for (int x = 0; x < chunkSize; x++)
+	{
+		for (int z = 0; z < chunkSize; z++)
+		{
+			
+			mesh.addSquareVertex(glm::vec3(X[x], Y[x], Z[z]), glm::vec3(X[x + 1] , Y[x + 1], Z[z]), glm::vec3(X[x + 1], Y[x + 2], Z[z + 1]), glm::vec3(X[x], Y[x + 3], Z[z + 1]));
+			
 		}
 	}
-	// Amplification(the lower the number the higher the amplification)
-	float noiseAmplification = 100.0;
+	
 
 	/*
 	for (int x = 0; x < chunkSize; x++)

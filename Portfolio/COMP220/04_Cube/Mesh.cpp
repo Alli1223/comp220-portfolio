@@ -33,6 +33,8 @@ void Mesh::addVertex(const Vertex& vertex)
 	m_vertexNormals.push_back(vertex.m_normal);
 }
 
+
+// Adds a triangle from vertices and calculates the normal of the face
 void Mesh::addTriangleVertex(Vertex v1, Vertex v2, Vertex v3)
 {
 	glm::vec3 normal = glm::cross(v2.m_position - v1.m_position, v3.m_position - v1.m_position);
@@ -47,12 +49,17 @@ void Mesh::addTriangleVertex(Vertex v1, Vertex v2, Vertex v3)
 	addVertex(v3);
 }
 
+
+// Combines two triangles to make a square
 void Mesh::addSquareVertex(Vertex v1, Vertex v2, Vertex v3, Vertex v4)
 {
-	addTriangleVertex(v1, v2, v4);
-	addTriangleVertex(v1, v3, v4);
+	addTriangleVertex(v3, v2, v1);
+	addTriangleVertex(v1, v4, v3);
 }
 
+
+
+// Old cumbersome method of creating a triangle
 void Mesh::addTriangle(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3,
 	const glm::vec3& colour,
 	const glm::vec2& t1, const glm::vec2& t2, const glm::vec2& t3)
