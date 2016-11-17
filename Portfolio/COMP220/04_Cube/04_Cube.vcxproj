@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Perlin_Noise.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Portfolio_Main.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Resource.h" />
@@ -167,6 +168,7 @@
   <ItemGroup>
     <ClCompile Include="Perlin_Noise.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="Portfolio_Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="stdafx.cpp">
