@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Portfolio_Main.h"
+#include "Physics.h"
 
 void showErrorMessage(const char* message, const char* title)
 {
@@ -179,6 +180,7 @@ int main(int argc, char* args[])
 	Mesh grassMesh;
 	Mesh mountainMesh;
 	Terrain terrain;
+	Physics physics;
 
 	//////// Generate the terrain ///////////////
 	terrain.generateChunk(grassMesh, mountainMesh);
@@ -214,6 +216,7 @@ int main(int argc, char* args[])
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetRelativeMouseState(nullptr, nullptr);
+	Uint32 lastFrameTime = SDL_GetTicks();
 
 	bool running = true;
 	while (running)
@@ -259,6 +262,8 @@ int main(int argc, char* args[])
 
 		glm::vec4 playerForward = playerLook;
 
+		physics.UpdatePhysics(lastFrameTime);
+		
 		
 		const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
 		if (keyboardState[SDL_SCANCODE_W])
