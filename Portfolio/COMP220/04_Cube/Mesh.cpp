@@ -90,7 +90,7 @@ void Mesh::addCubeFromFace(const std::vector<glm::vec3>& cubePoint, const glm::v
 		throw std::exception("Too many cubePoints being added to cube!");
 	}
 
-	// Dont render cubes that are eual to null
+	// Dont render cubes that all points are equal to null
 	if (cubePoint[0] != null && cubePoint[1] != null && cubePoint[2] != null && cubePoint[3] != null)
 		addSquare(cubePoint[0], cubePoint[1], cubePoint[2], cubePoint[3], colour, 0.25f, 0.5f, 0.0f, 0.25f);
 	if (cubePoint[1] != null && cubePoint[7] != null && cubePoint[6] != null && cubePoint[2] != null)

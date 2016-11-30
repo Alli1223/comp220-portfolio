@@ -30,7 +30,7 @@ void Terrain::makeGrid()
 
 		for (float z = 0; z < terrainDepth; z++)
 		{
-			float terrainHeight = perlinNoise.noise((x / noiseAmplification), (z / noiseAmplification), 0);
+			double terrainHeight = perlinNoise.noise((x / noiseAmplification), (z / noiseAmplification), 0);
 			terrainHeight = (char)((terrainHeight - noiseMin) * (255 / (noiseMax - noiseMin)));
 
 			Voxel voxel(x, terrainHeight, z);
@@ -80,7 +80,10 @@ void Terrain::generateChunk(Mesh& grassMesh, Mesh& mountainMesh)
 void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPosition, std::vector<std::vector<Voxel>>& Voxels)
 {
 	glm::vec3 colour(0.25, 0.25, 0.25);
+	glm::vec3 null(0,0,0);
 	std::vector<glm::vec3> faces;
+	
+	glm::vec3 leftVoxel(Voxels[voxelPosition.x - 1][voxelPosition.z].getvoxelPosition());
 
 
 	// Set voxels below snowPeakHeight to be ground
@@ -94,6 +97,15 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		glm::vec3 f(voxelPosition.x - voxelSize, voxelPosition.y - voxelSize, voxelPosition.z - voxelSize);
 		glm::vec3 g(voxelPosition.x + voxelSize, voxelPosition.y - voxelSize, voxelPosition.z - voxelSize);
 		glm::vec3 h(voxelPosition.x + voxelSize, voxelPosition.y - voxelSize, voxelPosition.z + voxelSize);
+
+		// Work out what faces to remove
+		if (voxelPosition.x == leftVoxel.x)
+		{
+			a = null;
+			b = null;
+			c = null;
+			d = null;
+		}
 
 		faces.push_back(a);
 		faces.push_back(b);
