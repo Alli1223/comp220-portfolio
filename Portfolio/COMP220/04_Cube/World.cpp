@@ -265,12 +265,12 @@ void World::createWorld()
 
 		// Set player height to the floor height
 		if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
-			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + 2;
+			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
 
 		////////////// Lighting Variables /////////////////
 		// Changes specular value and light power
 		float specularIntensityVal = 10000.0f;
-		float lightPower = 0.75f;
+		float lightPower = 1.0f;
 
 		// Changes the colour of the light
 		glm::vec3 lightColour(1, 1, 1);

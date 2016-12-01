@@ -28,5 +28,8 @@ private:
 
 	//! Stores the players initial starting position
 	float PlayerStartX = 50, PlayerStartY = 50, PlayerStartZ = 50;
+
+	//! How height the camera is from the terrain
+	float playerheight = 3.0f;
 };
 
