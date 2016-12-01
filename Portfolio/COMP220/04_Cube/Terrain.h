@@ -20,7 +20,7 @@ public:
 	void generateTerrain(Mesh& mesh, Mesh& snowTexture);
 
 	//! Places a cube
-	void placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPosition, std::vector<std::vector<Voxel>>& Voxels);
+	void placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPosition, glm::vec3& lastVoxelPosition);
 
 	//! Creates a grid of voxels
 	void makeGrid();
@@ -44,11 +44,13 @@ public:
 	const float getGroundAmplification() { return GoundAmplification; }
 
 private:
-	const float terrainWidth = 100;
-	const float terrainDepth = 100;
+	//! How many voxels the world is made of
+	const float terrainWidth = 300;
+	const float terrainDepth = 300;
+
+	//! Changes how amplified the perlin noise is
 	const float noiseMax = 3;
 	const float noiseMin = 0;
-	const float SquareSize = 1.5f;
 
 	//! Amplification(the lower the number the higher the amplification)
 	const float noiseAmplification = 180.0;

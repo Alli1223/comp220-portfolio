@@ -16,11 +16,9 @@ void Player_Movement::playerMove(glm::vec4& playerPosition)
 	SDL_GetRelativeMouseState(&mouseX, &mouseY);
 
 	// Mouse sensitivity
-	playerYaw -= mouseX * 0.005f;
-	playerPitch -= mouseY * 0.005f;
+	playerYaw -= mouseX * mouseSensitivity;
+	playerPitch -= mouseY * mouseSensitivity;
 
-	// Max up & down view distance
-	const float maxPitch = glm::radians(89.0f);
 	if (playerPitch > maxPitch)
 		playerPitch = maxPitch;
 	if (playerPitch < -maxPitch)

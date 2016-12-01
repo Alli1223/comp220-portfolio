@@ -51,6 +51,7 @@ void Terrain::generateTerrain(Mesh& groundTexture, Mesh& snowTexture)
 
 	// Makes the grid of voxels
 	makeGrid();
+	glm::vec3 lastVoxelPos(0, 0, 0);
 
 	for (float x = 0; x < terrainWidth; x++)
 	{
@@ -63,7 +64,8 @@ void Terrain::generateTerrain(Mesh& groundTexture, Mesh& snowTexture)
 			*/
 			
 			// Place the voxel
-			placeCube(groundTexture, snowTexture, voxelPos, Voxels);
+			placeCube(groundTexture, snowTexture, voxelPos, lastVoxelPos);
+			lastVoxelPos = voxelPos;
 		}
 	}
 }
@@ -75,10 +77,14 @@ void Terrain::generateChunk(Mesh& grassMesh, Mesh& mountainMesh)
 	
 }
 
-void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPosition, std::vector<std::vector<Voxel>>& Voxels)
+void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPosition, glm::vec3& lastVoxelPosition)
 {
 	glm::vec3 colour(0.25, 0.25, 0.25);
-	std::vector<glm::vec3> faces;
+	//Stores a vector of points 
+	std::vector<glm::vec3> point;
+	glm::vec3 null(0, 0, 0);
+
+
 	// Set voxels below snowPeakHeight to be ground
 	if (voxelPosition.y < snowPeakHeight)
 	{
@@ -91,21 +97,87 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		glm::vec3 g(voxelPosition.x + voxelSize, voxelPosition.y - voxelSize, voxelPosition.z - voxelSize);
 		glm::vec3 h(voxelPosition.x + voxelSize, voxelPosition.y - voxelSize, voxelPosition.z + voxelSize);
 
-		faces.push_back(a);
-		faces.push_back(b);
-		faces.push_back(c);
-		faces.push_back(d);
-		faces.push_back(e);
-		faces.push_back(f);
-		faces.push_back(g);
-		faces.push_back(h);
+		glm::vec3 lasta(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
+		glm::vec3 lastb(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
+		glm::vec3 lastc(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 lastd(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 laste(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
+		glm::vec3 lastf(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 lastg(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
 
-		grassMesh.addCubeFromFace(faces, colour);
+
+		if (a == lasta)
+		{
+			a = null;
+			point.push_back(a);
+		}
+		else
+			point.push_back(a);
+
+
+		if (b == lastb)
+		{
+			b = null;
+			point.push_back(b);
+		}
+		else
+			point.push_back(b);
+
+		if (c == lastc)
+		{
+			c = null;
+			point.push_back(c);
+		}
+		else
+			point.push_back(c);
+
+		if (d == lastd)
+		{
+			d = null;
+			point.push_back(d);
+		}
+		else
+			point.push_back(d);
+
+		if (e == laste)
+		{
+			e = null;
+			point.push_back(e);
+		}
+		else
+			point.push_back(e);
+
+		if (f == lastf)
+		{
+			f = null;
+			point.push_back(f);
+		}
+		else
+			point.push_back(f);
+
+		if (g == lastg)
+		{
+			g = null;
+			point.push_back(g);
+		}
+		else
+			point.push_back(g);
+
+		if (h == lasth)
+		{
+			h = null;
+			point.push_back(h);
+		}
+		else
+			point.push_back(h);
+
+		grassMesh.addCubeFromFace(point, colour);
 	}
 	// Else render snow texture cube
 	else
 	{
-		
+
 		glm::vec3 a(voxelPosition.x - voxelSize, voxelPosition.y + voxelSize, voxelPosition.z + voxelSize);
 		glm::vec3 b(voxelPosition.x + voxelSize, voxelPosition.y + voxelSize, voxelPosition.z + voxelSize);
 		glm::vec3 c(voxelPosition.x + voxelSize, voxelPosition.y + voxelSize, voxelPosition.z - voxelSize);
@@ -118,17 +190,81 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		// Offset the mountain terrain to be lighter at the top
 		glm::vec3 colour(voxelPosition.y / 50, voxelPosition.y / 50, voxelPosition.y / 50);
 
+		glm::vec3 lasta(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
+		glm::vec3 lastb(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
+		glm::vec3 lastc(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 lastd(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 laste(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
+		glm::vec3 lastf(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 lastg(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
+		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
 
-		faces.push_back(a);
-		faces.push_back(b);
-		faces.push_back(c);
-		faces.push_back(d);
-		faces.push_back(e);
-		faces.push_back(f);
-		faces.push_back(g);
-		faces.push_back(h);
+		if (a == lasta)
+		{
+			a = null;
+			point.push_back(a);
+		}
+		else
+			point.push_back(a);
 
-		mountainMesh.addCubeFromFace(faces, colour);
+
+		if (b == lastb)
+		{
+			b = null;
+			point.push_back(b);
+		}
+		else
+			point.push_back(b);
+
+		if (c == lastc)
+		{
+			c = null;
+			point.push_back(c);
+		}
+		else
+			point.push_back(c);
+
+		if (d == lastd)
+		{
+			d = null;
+			point.push_back(d);
+		}
+		else
+			point.push_back(d);
+
+		if (e == laste)
+		{
+			e = null;
+			point.push_back(e);
+		}
+		else
+			point.push_back(e);
+
+		if (f == lastf)
+		{
+			f = null;
+			point.push_back(f);
+		}
+		else
+			point.push_back(f);
+
+		if (g == lastg)
+		{
+			g = null;
+			point.push_back(g);
+		}
+		else
+			point.push_back(g);
+
+		if (h == lasth)
+		{
+			h = null;
+			point.push_back(h);
+		}
+		else
+			point.push_back(h);
+
+		mountainMesh.addCubeFromFace(point, colour);
 	}
 }
 

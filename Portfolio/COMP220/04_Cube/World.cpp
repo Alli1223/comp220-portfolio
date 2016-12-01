@@ -231,15 +231,15 @@ void World::createWorld()
 				}
 			}
 		}
-		
+
 		// Function that moves the player
 		playerMovement.playerMove(playerPosition);
 
 		// Gets the value of player look for functions later in this class
 		glm::vec4 playerLook = playerMovement.GetPlayerLook();
-		
+
 		// Random variable that changes over time (for testing)
-		float varyingPower = sin(SDL_GetTicks() / 5000.0f);
+		float varyingPower = sin(SDL_GetTicks() / 1000.0f);
 
 		// Set the background to sky blue
 		glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
@@ -280,7 +280,7 @@ void World::createWorld()
 		glm::vec3 objectColour(colour.r, colour.g, colour.b);
 
 		// The position of the light
-		glm::vec3 lightPos(100, -5, 1);
+		glm::vec3 lightPos(playerPosition.x, playerPosition.y, playerPosition.z);
 
 		// Passing in the values to the fragment shader
 		glUniform3f(lightDirectionLocation, 100, -5, 1);
@@ -299,6 +299,6 @@ void World::createWorld()
 		mountainMesh.draw();
 		SDL_GL_SwapWindow(window);
 	}
-	
+
 }
 
