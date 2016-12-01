@@ -239,7 +239,7 @@ void World::createWorld()
 		glm::vec4 playerLook = playerMovement.GetPlayerLook();
 		
 		// Random variable that changes over time (for testing)
-		float varyingPower = sin(SDL_GetTicks() / 5000.0f);
+		float varyingPower = sin(SDL_GetTicks() / 1000.0f);
 
 		// Set the background to sky blue
 		glClearColor(0.1f, 0.2f, 0.3f, 1.0f);

@@ -106,45 +106,69 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		glm::vec3 lastg(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
 		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
 
-		// TODO: work out when to remove vertical faces
+
 		if (a == lasta)
+		{
 			a = null;
+			point.push_back(a);
+		}
 		else
 			point.push_back(a);
 
 
 		if (b == lastb)
+		{
 			b = null;
+			point.push_back(b);
+		}
 		else
 			point.push_back(b);
 
 		if (c == lastc)
+		{
 			c = null;
+			point.push_back(c);
+		}
 		else
 			point.push_back(c);
 
 		if (d == lastd)
+		{
 			d = null;
+			point.push_back(d);
+		}
 		else
 			point.push_back(d);
 
 		if (e == laste)
+		{
 			e = null;
+			point.push_back(e);
+		}
 		else
 			point.push_back(e);
 
 		if (f == lastf)
+		{
 			f = null;
+			point.push_back(f);
+		}
 		else
 			point.push_back(f);
 
 		if (g == lastg)
+		{
 			g = null;
+			point.push_back(g);
+		}
 		else
 			point.push_back(g);
 
 		if (h == lasth)
+		{
 			h = null;
+			point.push_back(h);
+		}
 		else
 			point.push_back(h);
 
@@ -176,43 +200,67 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
 
 		if (a == lasta)
+		{
 			a = null;
+			point.push_back(a);
+		}
 		else
 			point.push_back(a);
 
 
 		if (b == lastb)
+		{
 			b = null;
+			point.push_back(b);
+		}
 		else
 			point.push_back(b);
 
 		if (c == lastc)
+		{
 			c = null;
+			point.push_back(c);
+		}
 		else
 			point.push_back(c);
 
 		if (d == lastd)
+		{
 			d = null;
+			point.push_back(d);
+		}
 		else
 			point.push_back(d);
 
 		if (e == laste)
+		{
 			e = null;
+			point.push_back(e);
+		}
 		else
 			point.push_back(e);
 
 		if (f == lastf)
+		{
 			f = null;
+			point.push_back(f);
+		}
 		else
 			point.push_back(f);
 
 		if (g == lastg)
+		{
 			g = null;
+			point.push_back(g);
+		}
 		else
 			point.push_back(g);
 
 		if (h == lasth)
+		{
 			h = null;
+			point.push_back(h);
+		}
 		else
 			point.push_back(h);
 

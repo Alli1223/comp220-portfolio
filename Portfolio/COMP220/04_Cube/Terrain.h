@@ -44,8 +44,8 @@ public:
 	const float getGroundAmplification() { return GoundAmplification; }
 
 private:
-	const float terrainWidth = 700;
-	const float terrainDepth = 700;
+	const float terrainWidth = 300;
+	const float terrainDepth = 300;
 	const float noiseMax = 3;
 	const float noiseMin = 0;
 	const float SquareSize = 1.5f;

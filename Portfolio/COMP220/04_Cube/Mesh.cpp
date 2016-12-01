@@ -98,7 +98,7 @@ void Mesh::addCubeFromFace(const std::vector<glm::vec3>& cubePoint, const glm::v
 	if (cubePoint[4] != null && cubePoint[5] != null && cubePoint[6] != null && cubePoint[6] != null)
 		addSquare(cubePoint[4], cubePoint[5], cubePoint[6], cubePoint[7], colour, 0.0f, 0.25f, 0.25f, 0.5f);
 	if (cubePoint[3] != null && cubePoint[2] != null && cubePoint[6] != null && cubePoint[5] != null)
-		addSquare(cubePoint[3], cubePoint[2], cubePoint[6], cubePoint[5], colour, 0.25f, 0.5f, 0.5f, 0.75f);
+		addSquare(cubePoint[3], cubePoint[2], cubePoint[6], cubePoint[5], colour, 0.25f, 0.5f, 0.5f, 0.75f); // No need to render bottom square
 }
 
 void Mesh::addCircle(const glm::vec3& centre, float radius, int numPoints,
