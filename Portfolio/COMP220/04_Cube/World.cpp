@@ -162,6 +162,7 @@ World::~World()
 
 void World::createWorld()
 {
+	// Load textures
 	GLuint grassTexture = loadTexture("GrassTex.png");
 	GLuint mountainTexture = loadTexture("MountainTexture.png");
 
@@ -202,7 +203,8 @@ void World::createWorld()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
 
-	glm::vec4 playerPosition(50, 50, 50, 1);
+	// Vec4 of players start pos
+	glm::vec4 playerPosition(PlayerStartX, PlayerStartY, PlayerStartZ, 1);
 
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -230,7 +232,10 @@ void World::createWorld()
 			}
 		}
 		
+		// Function that moves the player
 		playerMovement.playerMove(playerPosition);
+
+		// Gets the value of player look for functions later in this class
 		glm::vec4 playerLook = playerMovement.GetPlayerLook();
 		
 		// Random variable that changes over time (for testing)
@@ -241,13 +246,20 @@ void World::createWorld()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(programID);
 
+		// Calculate the view matrix
 		glm::mat4 view = glm::lookAt(glm::vec3(playerPosition), glm::vec3(playerPosition + playerLook), glm::vec3(0, 1, 0));
 
-		// Render Distance
+		// Calculate the projection matrix
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 6000.0f);
 
+		// Transform matrix
 		glm::mat4 transform;
+
+		// Uncomment to apply rotation and translation to the terrain
+		//transform = glm::translate(transform, glm::vec3(varyingPower * 10, 0, 0));
 		//transform = glm::rotate(transform, glm::radians(-90.0f), glm::vec3(1, 0, 0)); 
+
+		// Calcualte the MVP matrix and pass it in
 		glm::mat4 mvp = projection * view * transform;
 		glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
 
