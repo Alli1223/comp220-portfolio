@@ -13,6 +13,7 @@ public:
 	//! Destructor
 	~World();
 
+	//! Creates the world
 	void createWorld();
 
 

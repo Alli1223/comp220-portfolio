@@ -231,13 +231,13 @@ void World::createWorld()
 				}
 			}
 		}
-		
+
 		// Function that moves the player
 		playerMovement.playerMove(playerPosition);
 
 		// Gets the value of player look for functions later in this class
 		glm::vec4 playerLook = playerMovement.GetPlayerLook();
-		
+
 		// Random variable that changes over time (for testing)
 		float varyingPower = sin(SDL_GetTicks() / 1000.0f);
 
@@ -264,8 +264,8 @@ void World::createWorld()
 		glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
 
 		// Set player height to the floor height
-		//if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
-		//	playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
+		if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
+			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
 
 		////////////// Lighting Variables /////////////////
 		// Changes specular value and light power
@@ -280,7 +280,7 @@ void World::createWorld()
 		glm::vec3 objectColour(colour.r, colour.g, colour.b);
 
 		// The position of the light
-		glm::vec3 lightPos(100, -5, 1);
+		glm::vec3 lightPos(playerPosition.x, playerPosition.y, playerPosition.z);
 
 		// Passing in the values to the fragment shader
 		glUniform3f(lightDirectionLocation, 100, -5, 1);
@@ -299,6 +299,6 @@ void World::createWorld()
 		mountainMesh.draw();
 		SDL_GL_SwapWindow(window);
 	}
-	
+
 }
 

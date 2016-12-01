@@ -44,11 +44,13 @@ public:
 	const float getGroundAmplification() { return GoundAmplification; }
 
 private:
+	//! How many voxels the world is made of
 	const float terrainWidth = 300;
 	const float terrainDepth = 300;
+
+	//! Changes how amplified the perlin noise is
 	const float noiseMax = 3;
 	const float noiseMin = 0;
-	const float SquareSize = 1.5f;
 
 	//! Amplification(the lower the number the higher the amplification)
 	const float noiseAmplification = 180.0;
