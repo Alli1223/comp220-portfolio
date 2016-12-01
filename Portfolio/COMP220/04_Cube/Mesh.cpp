@@ -84,11 +84,7 @@ void Mesh::addCubeFromFace(const std::vector<glm::vec3>& cubePoint, const glm::v
 {
 	glm::vec3 null(0, 0, 0);
 
-	if (cubePoint.size() > 8)
-	{
-		int size = cubePoint.size();
-		throw std::exception("Too many cubePoints being added to cube!");
-	}
+	
 
 	// Dont render cubes that are eual to null
 	if (cubePoint[0] != null && cubePoint[1] != null && cubePoint[2] != null && cubePoint[3] != null)

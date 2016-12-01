@@ -264,8 +264,8 @@ void World::createWorld()
 		glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
 
 		// Set player height to the floor height
-		if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
-			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
+		//if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
+		//	playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
 
 		////////////// Lighting Variables /////////////////
 		// Changes specular value and light power
