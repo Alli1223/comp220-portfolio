@@ -80,8 +80,11 @@ void Terrain::generateChunk(Mesh& grassMesh, Mesh& mountainMesh)
 void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPosition, glm::vec3& lastVoxelPosition)
 {
 	glm::vec3 colour(0.25, 0.25, 0.25);
-	std::vector<glm::vec3> faces;
+	//Stores a vector of points 
+	std::vector<glm::vec3> point;
 	glm::vec3 null(0, 0, 0);
+
+
 	// Set voxels below snowPeakHeight to be ground
 	if (voxelPosition.y < snowPeakHeight)
 	{
@@ -103,48 +106,49 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		glm::vec3 lastg(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
 		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
 
+		// TODO: work out when to remove vertical faces
 		if (a == lasta)
 			a = null;
 		else
-			faces.push_back(a);
+			point.push_back(a);
 
 
 		if (b == lastb)
 			b = null;
 		else
-			faces.push_back(b);
+			point.push_back(b);
 
 		if (c == lastc)
 			c = null;
 		else
-			faces.push_back(c);
+			point.push_back(c);
 
 		if (d == lastd)
 			d = null;
 		else
-			faces.push_back(d);
+			point.push_back(d);
 
 		if (e == laste)
 			e = null;
 		else
-			faces.push_back(e);
+			point.push_back(e);
 
 		if (f == lastf)
 			f = null;
 		else
-			faces.push_back(f);
+			point.push_back(f);
 
 		if (g == lastg)
 			g = null;
 		else
-			faces.push_back(g);
+			point.push_back(g);
 
 		if (h == lasth)
 			h = null;
 		else
-			faces.push_back(h);
+			point.push_back(h);
 
-		grassMesh.addCubeFromFace(faces, colour);
+		grassMesh.addCubeFromFace(point, colour);
 	}
 	// Else render snow texture cube
 	else
@@ -174,45 +178,45 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		if (a == lasta)
 			a = null;
 		else
-			faces.push_back(a);
+			point.push_back(a);
 
 
 		if (b == lastb)
 			b = null;
 		else
-			faces.push_back(b);
+			point.push_back(b);
 
 		if (c == lastc)
 			c = null;
 		else
-			faces.push_back(c);
+			point.push_back(c);
 
 		if (d == lastd)
 			d = null;
 		else
-			faces.push_back(d);
+			point.push_back(d);
 
 		if (e == laste)
 			e = null;
 		else
-			faces.push_back(e);
+			point.push_back(e);
 
 		if (f == lastf)
 			f = null;
 		else
-			faces.push_back(f);
+			point.push_back(f);
 
 		if (g == lastg)
 			g = null;
 		else
-			faces.push_back(g);
+			point.push_back(g);
 
 		if (h == lasth)
 			h = null;
 		else
-			faces.push_back(h);
+			point.push_back(h);
 
-		mountainMesh.addCubeFromFace(faces, colour);
+		mountainMesh.addCubeFromFace(point, colour);
 	}
 }
 
