@@ -52,14 +52,12 @@ void Terrain::generateTerrain(Mesh& groundTexture, Mesh& snowTexture)
 	// Makes the grid of voxels
 	makeGrid();
 
-
 	for (float x = 0; x < terrainWidth; x++)
 	{
 		for (float z = 0; z < terrainDepth; z++)
 		{
 			
 			glm::vec3 voxelPos(x + voxelSize + voxelSize, getHeight(x,z) + voxelSize + voxelSize, z + voxelSize + voxelSize);
-
 
 			/* TODO: Calculate neighbouring voxels and remove unnessary triangles
 			*/
@@ -81,8 +79,6 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 {
 	glm::vec3 colour(0.25, 0.25, 0.25);
 	std::vector<glm::vec3> faces;
-
-
 	// Set voxels below snowPeakHeight to be ground
 	if (voxelPosition.y < snowPeakHeight)
 	{
@@ -109,6 +105,7 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 	// Else render snow texture cube
 	else
 	{
+		
 		glm::vec3 a(voxelPosition.x - voxelSize, voxelPosition.y + voxelSize, voxelPosition.z + voxelSize);
 		glm::vec3 b(voxelPosition.x + voxelSize, voxelPosition.y + voxelSize, voxelPosition.z + voxelSize);
 		glm::vec3 c(voxelPosition.x + voxelSize, voxelPosition.y + voxelSize, voxelPosition.z - voxelSize);
@@ -120,6 +117,7 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 
 		// Offset the mountain terrain to be lighter at the top
 		glm::vec3 colour(voxelPosition.y / 50, voxelPosition.y / 50, voxelPosition.y / 50);
+
 
 		faces.push_back(a);
 		faces.push_back(b);

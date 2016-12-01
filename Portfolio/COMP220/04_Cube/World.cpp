@@ -162,6 +162,7 @@ World::~World()
 
 void World::createWorld()
 {
+	// Load textures
 	GLuint grassTexture = loadTexture("GrassTex.png");
 	GLuint mountainTexture = loadTexture("MountainTexture.png");
 
@@ -173,6 +174,7 @@ void World::createWorld()
 	Mesh grassMesh;
 	Mesh mountainMesh;
 	Terrain terrain;
+	Player_Movement playerMovement;
 
 	/////// Generate the terrain ///////////////
 	terrain.generateTerrain(grassMesh, mountainMesh);
@@ -201,9 +203,9 @@ void World::createWorld()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
 
-	glm::vec4 playerPosition(50, 50, 50, 1);
-	float playerPitch = 0;
-	float playerYaw = 0;
+	// Vec4 of players start pos
+	glm::vec4 playerPosition(PlayerStartX, PlayerStartY, PlayerStartZ, 1);
+
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetRelativeMouseState(nullptr, nullptr);
@@ -229,72 +231,13 @@ void World::createWorld()
 				}
 			}
 		}
+		
+		// Function that moves the player
+		playerMovement.playerMove(playerPosition);
 
-		int mouseX, mouseY;
-		SDL_GetRelativeMouseState(&mouseX, &mouseY);
-		// Mouse sensitivity
-		playerYaw -= mouseX * 0.005f;
-		playerPitch -= mouseY * 0.005f;
-
-		// Max up & down view distance
-		const float maxPitch = glm::radians(89.0f);
-		if (playerPitch > maxPitch)
-			playerPitch = maxPitch;
-		if (playerPitch < -maxPitch)
-			playerPitch = -maxPitch;
-
-		// Forwards and back movement controls
-		glm::vec4 playerLook(0, 0, -1, 0);
-		glm::mat4 playerRotation;
-		playerRotation = glm::rotate(playerRotation, playerYaw, glm::vec3(0, 1, 0));
-		playerRotation = glm::rotate(playerRotation, playerPitch, glm::vec3(1, 0, 0));
-		playerLook = playerRotation * playerLook;
-
-		glm::vec4 playerForward = playerLook;
-
-
-		const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
-		if (keyboardState[SDL_SCANCODE_W])
-		{
-			playerPosition += playerForward * playerSpeed;
-			// Speed modifier
-			if (keyboardState[SDL_SCANCODE_LSHIFT])
-			{
-				playerPosition += playerForward * speedModifierIncrease;
-			}
-		}
-		if (keyboardState[SDL_SCANCODE_S])
-		{
-			playerPosition -= playerForward * playerSpeed;
-			// Speed modifier
-			if (keyboardState[SDL_SCANCODE_LSHIFT])
-			{
-				playerPosition -= playerForward * speedModifierIncrease;
-			}
-		}
-
-		// For left and right movement
-		glm::vec4 playerRight(0, 0, -1, 0);
-		glm::mat4 playerRightRotation;
-		playerRightRotation = glm::rotate(playerRightRotation, playerYaw - glm::radians(90.0f), glm::vec3(0, 1, 0));
-		playerRight = playerRightRotation * playerRight;
-
-		if (keyboardState[SDL_SCANCODE_A])
-		{
-			playerPosition -= playerRight * playerSpeed;
-			if (keyboardState[SDL_SCANCODE_LSHIFT])
-			{
-				playerPosition -= playerRight * speedModifierIncrease;
-			}
-		}
-		if (keyboardState[SDL_SCANCODE_D])
-		{
-			playerPosition += playerRight * playerSpeed;
-			if (keyboardState[SDL_SCANCODE_LSHIFT])
-			{
-				playerPosition += playerRight * speedModifierIncrease;
-			}
-		}
+		// Gets the value of player look for functions later in this class
+		glm::vec4 playerLook = playerMovement.GetPlayerLook();
+		
 		// Random variable that changes over time (for testing)
 		float varyingPower = sin(SDL_GetTicks() / 5000.0f);
 
@@ -303,24 +246,31 @@ void World::createWorld()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(programID);
 
+		// Calculate the view matrix
 		glm::mat4 view = glm::lookAt(glm::vec3(playerPosition), glm::vec3(playerPosition + playerLook), glm::vec3(0, 1, 0));
 
-		// Render Distance
+		// Calculate the projection matrix
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 6000.0f);
 
+		// Transform matrix
 		glm::mat4 transform;
+
+		// Uncomment to apply rotation and translation to the terrain
+		//transform = glm::translate(transform, glm::vec3(varyingPower * 10, 0, 0));
 		//transform = glm::rotate(transform, glm::radians(-90.0f), glm::vec3(1, 0, 0)); 
+
+		// Calcualte the MVP matrix and pass it in
 		glm::mat4 mvp = projection * view * transform;
 		glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
 
 		// Set player height to the floor height
 		if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
-			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + 2;
+			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
 
 		////////////// Lighting Variables /////////////////
 		// Changes specular value and light power
 		float specularIntensityVal = 10000.0f;
-		float lightPower = 0.75f;
+		float lightPower = 1.0f;
 
 		// Changes the colour of the light
 		glm::vec3 lightColour(1, 1, 1);
