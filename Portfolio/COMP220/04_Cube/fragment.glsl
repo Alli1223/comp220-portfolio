@@ -20,6 +20,8 @@ out vec4 fragmentColour;
 
 void main()
 {
+	
+
 	// Calculate Ambient
 	vec3 MaterialAmbientColor = ObjectColor * colour;
     vec3 n = normalize( normal );
@@ -31,25 +33,16 @@ void main()
 	vec3 E = normalize(eyeDirection);
 	vec3 R = (-lightDirection, normal);
 	vec3 lightDirectionNorm = normalize(lightDirection);
+	vec3 Diffuse = (colour * LightColor * LightColor * cosTheta);
+
+	// Calculate Attenuation
+	float distance = length(lightPos - n);
 
 	// Calculate Specular
 	float cosAlpha = clamp( dot( E,R ), 0,1 );
 	float diffuseIntensity = dot(normal, lightDirectionNorm);
 	float lightIntensity = diffuseIntensity + pow(cosAlpha, specularIntensity);
-
-	// Calculate Attenuation
-	float distance = length(lightPos - n);
+	vec3 Specular = (lightIntensity * ObjectColor * LightColor * cosAlpha);
 	
-	fragmentColour = vec4(
-
-
-	// Ambient
-	MaterialAmbientColor + 
-
-	// Diffuse
-	colour * LightPower * LightColor * cosTheta / (distance * distance) + 
-
-	// Specular
-	lightIntensity * ObjectColor * LightPower, 1.0) * texture(textureSampler, uv);
-	//fragmentColour = vec4(colour, 1.0);
+	fragmentColour = vec4(MaterialAmbientColor + Diffuse + Specular, 1.0) * texture(textureSampler, uv);
 }
