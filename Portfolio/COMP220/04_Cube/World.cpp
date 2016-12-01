@@ -162,8 +162,6 @@ World::~World()
 
 void World::createWorld()
 {
-
-
 	GLuint grassTexture = loadTexture("GrassTex.png");
 	GLuint mountainTexture = loadTexture("MountainTexture.png");
 
@@ -258,20 +256,20 @@ void World::createWorld()
 		const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
 		if (keyboardState[SDL_SCANCODE_W])
 		{
-			playerPosition += playerForward * 0.1f;
+			playerPosition += playerForward * playerSpeed;
 			// Speed modifier
 			if (keyboardState[SDL_SCANCODE_LSHIFT])
 			{
-				playerPosition += playerForward * 2.0f;
+				playerPosition += playerForward * speedModifierIncrease;
 			}
 		}
 		if (keyboardState[SDL_SCANCODE_S])
 		{
-			playerPosition -= playerForward * 0.1f;
+			playerPosition -= playerForward * playerSpeed;
 			// Speed modifier
 			if (keyboardState[SDL_SCANCODE_LSHIFT])
 			{
-				playerPosition -= playerForward * 2.0f;
+				playerPosition -= playerForward * speedModifierIncrease;
 			}
 		}
 
@@ -283,18 +281,18 @@ void World::createWorld()
 
 		if (keyboardState[SDL_SCANCODE_A])
 		{
-			playerPosition -= playerRight * 0.1f;
+			playerPosition -= playerRight * playerSpeed;
 			if (keyboardState[SDL_SCANCODE_LSHIFT])
 			{
-				playerPosition -= playerRight * 2.0f;
+				playerPosition -= playerRight * speedModifierIncrease;
 			}
 		}
 		if (keyboardState[SDL_SCANCODE_D])
 		{
-			playerPosition += playerRight * 0.1f;
+			playerPosition += playerRight * playerSpeed;
 			if (keyboardState[SDL_SCANCODE_LSHIFT])
 			{
-				playerPosition += playerRight * 2.0f;
+				playerPosition += playerRight * speedModifierIncrease;
 			}
 		}
 		// Random variable that changes over time (for testing)
