@@ -201,7 +201,7 @@ void World::createWorld()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glEnable(GL_LIGHTING);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	// Vec4 of players start pos
 	glm::vec4 playerPosition(PlayerStartX, PlayerStartY, PlayerStartZ, 1);
@@ -264,16 +264,16 @@ void World::createWorld()
 		glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
 
 		// Set player height to the floor height
-		if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
-			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
+		//if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
+		//	playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
 
 		////////////// Lighting Variables /////////////////
 		// Changes specular value and light power
-		float specularIntensityVal = 10000.0f;
+		float specularIntensityVal = 1000.0f;
 		float lightPower = 1.0f;
 
 		// Changes the colour of the light
-		glm::vec3 lightColour(1, 1, 1);
+		glm::vec3 lightColour(1.0, 1.0, 1.0);
 
 		// The grounds colour Variable for offset if needed
 		glm::vec3 colour = glm::vec3(0.5, 0.5, 0.5);

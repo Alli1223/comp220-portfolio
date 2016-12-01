@@ -10,7 +10,7 @@ public:
 	~Voxel();
 
 	//! Voxel position
-	Voxel(float x, float y, float z);
+	Voxel(long int x, long int y, long int z);
 
 	//! Stores whether the voxel is a voxel( to be expanded upon for more bools)
 	bool isVoxel = true;

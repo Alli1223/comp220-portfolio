@@ -45,8 +45,8 @@ public:
 
 private:
 	//! How many voxels the world is made of
-	const float terrainWidth = 300;
-	const float terrainDepth = 300;
+	const float terrainWidth = 700;
+	const float terrainDepth = 600;
 
 	//! Changes how amplified the perlin noise is
 	const float noiseMax = 3;

@@ -11,7 +11,7 @@ Voxel::~Voxel()
 {
 }
 
-Voxel::Voxel(float x, float y, float z)
+Voxel::Voxel(long int x, long int y, long int z)
 {
 	setVoxelPosition(glm::vec3(x, y, z));
 }

@@ -84,6 +84,8 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 	std::vector<glm::vec3> point;
 	glm::vec3 null(0, 0, 0);
 
+	//// WARNING VERY MESSY AND REPETITIVE CODE /////////
+	// TODO : Optimise the code that optimses
 
 	// Set voxels below snowPeakHeight to be ground
 	if (voxelPosition.y < snowPeakHeight)
@@ -106,6 +108,26 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		glm::vec3 lastg(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
 		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
 
+		// Fix rounding errors
+		// Remove squares behind camera
+		a.x = round(a.x); a.y = round(a.y); a.z = round(a.z);
+		b.x = round(b.x); b.y = round(b.y); b.z = round(b.z);
+		c.x = round(c.x); c.y = round(c.y); c.z = round(c.z);
+		d.x = round(d.x); d.y = round(d.y); d.z = round(d.z);
+		e.x = round(e.x); e.y = round(e.y); e.z = round(e.z);
+		f.x = round(f.x); f.y = round(f.y); f.z = round(f.z);
+		g.x = round(g.x); g.y = round(g.y); g.z = round(g.z);
+		h.x = round(h.x); h.y = round(g.y); h.z = round(g.z);
+
+		lasta.x = round(lasta.x); lasta.y = round(lasta.y); lasta.z = round(a.z);
+		lastb.x = round(lastb.x); lastb.y = round(lastb.y); lastb.z = round(b.z);
+		lastc.x = round(lastc.x); lastc.y = round(lastc.y); lastc.z = round(c.z);
+		lastd.x = round(lastd.x); lastd.y = round(lastd.y); lastd.z = round(d.z);
+		laste.x = round(laste.x); laste.y = round(laste.y); laste.z = round(e.z);
+		lastf.x = round(lastf.x); lastf.y = round(lastf.y); lastf.z = round(f.z);
+		lastg.x = round(lastg.x); lastg.y = round(lastg.y); lastg.z = round(g.z);
+		lasth.x = round(lasth.x); lasth.y = round(lasth.y); lasth.z = round(g.z);
+		
 
 		if (a == lasta)
 		{
@@ -114,7 +136,6 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		}
 		else
 			point.push_back(a);
-
 
 		if (b == lastb)
 		{
