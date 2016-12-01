@@ -3,6 +3,7 @@
 #include "Terrain.h"
 #include "Voxel.h"
 #include "Perlin_Noise.h"
+#include "Player_Movement.h"
 
 class World
 {
@@ -18,8 +19,6 @@ private:
 	SDL_Window* window;
 	SDL_GLContext glContext;
 
-	float playerSpeed = 0.2f;
-	float speedModifierIncrease = 2.0f;
 	int windowWidth = 1000;
 	int windowHeight = 1000;
 };
