@@ -176,7 +176,7 @@ void World::createWorld()
 	Terrain terrain;
 	Player_Movement playerMovement;
 
-	/////// Generate the terrain ///////////////
+	// Generate the terrain then create the buffers
 	terrain.generateTerrain(grassMesh, mountainMesh);
 	grassMesh.createBuffers();
 	mountainMesh.createBuffers();
@@ -191,7 +191,6 @@ void World::createWorld()
 	GLuint LightColor = glGetUniformLocation(programID, "LightColor");
 	GLuint ObjectColor = glGetUniformLocation(programID, "ObjectColor");
 	GLuint LightPower = glGetUniformLocation(programID, "LightPower");
-	GLuint distance = glGetUniformLocation(programID, "distance");
 	GLuint LightPos = glGetUniformLocation(programID, "LightPos");
 
 	glEnable(GL_DEPTH_TEST);
@@ -213,17 +212,17 @@ void World::createWorld()
 	bool running = true;
 	while (running)
 	{
-		SDL_Event ev;
-		while (SDL_PollEvent(&ev))
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
 		{
-			switch (ev.type)
+			switch (event.type)
 			{
 			case SDL_QUIT:
 				running = false;
 				break;
 
 			case SDL_KEYDOWN:
-				switch (ev.key.keysym.sym)
+				switch (event.key.keysym.sym)
 				{
 				case SDLK_ESCAPE:
 					running = false;
@@ -255,10 +254,6 @@ void World::createWorld()
 		// Transform matrix
 		glm::mat4 transform;
 
-		// Uncomment to apply rotation and translation to the terrain
-		//transform = glm::translate(transform, glm::vec3(varyingPower * 10, 0, 0));
-		//transform = glm::rotate(transform, glm::radians(-90.0f), glm::vec3(1, 0, 0)); 
-
 		// Calcualte the MVP matrix and pass it in
 		glm::mat4 mvp = projection * view * transform;
 		glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
@@ -269,18 +264,18 @@ void World::createWorld()
 
 		////////////// Lighting Variables /////////////////
 		// Changes specular value and light power
-		float specularIntensityVal = 10000.0f;
+		float specularIntensityVal = 1000.0f;
 		float lightPower = 1.0f;
 
 		// Changes the colour of the light
-		glm::vec3 lightColour(1, 1, 1);
+		glm::vec3 lightColour(1.0, 1.0, 1.0);
 
 		// The grounds colour Variable for offset if needed
 		glm::vec3 colour = glm::vec3(0.5, 0.5, 0.5);
 		glm::vec3 objectColour(colour.r, colour.g, colour.b);
 
 		// The position of the light
-		glm::vec3 lightPos(playerPosition.x, playerPosition.y, playerPosition.z);
+		glm::vec3 lightPos(1, 1, 1);
 
 		// Passing in the values to the fragment shader
 		glUniform3f(lightDirectionLocation, 100, -5, 1);
@@ -299,6 +294,5 @@ void World::createWorld()
 		mountainMesh.draw();
 		SDL_GL_SwapWindow(window);
 	}
-
 }
 

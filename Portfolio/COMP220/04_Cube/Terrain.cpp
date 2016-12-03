@@ -47,8 +47,6 @@ float Terrain::getHeight(float x, float z)
 }
 void Terrain::generateTerrain(Mesh& groundTexture, Mesh& snowTexture)
 {
-	
-
 	// Makes the grid of voxels
 	makeGrid();
 	glm::vec3 lastVoxelPos(0, 0, 0);
@@ -57,11 +55,7 @@ void Terrain::generateTerrain(Mesh& groundTexture, Mesh& snowTexture)
 	{
 		for (float z = 0; z < terrainDepth; z++)
 		{
-			
-			glm::vec3 voxelPos(x + voxelSize + voxelSize, getHeight(x,z) + voxelSize + voxelSize, z + voxelSize + voxelSize);
-
-			/* TODO: Calculate neighbouring voxels and remove unnessary triangles
-			*/
+			glm::vec3 voxelPos(x + voxelSize + voxelSize, getHeight(x,z) + voxelSize + voxelSize, z + voxelSize + voxelSize);	
 			
 			// Place the voxel
 			placeCube(groundTexture, snowTexture, voxelPos, lastVoxelPos);
@@ -70,20 +64,12 @@ void Terrain::generateTerrain(Mesh& groundTexture, Mesh& snowTexture)
 	}
 }
 
-
-//TODO: generate chunks when the player moves in that direction
-void Terrain::generateChunk(Mesh& grassMesh, Mesh& mountainMesh)
-{
-	
-}
-
 void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPosition, glm::vec3& lastVoxelPosition)
 {
 	glm::vec3 colour(0.25, 0.25, 0.25);
 	//Stores a vector of points 
 	std::vector<glm::vec3> point;
 	glm::vec3 null(0, 0, 0);
-
 
 	// Set voxels below snowPeakHeight to be ground
 	if (voxelPosition.y < snowPeakHeight)
@@ -97,80 +83,7 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		glm::vec3 g(voxelPosition.x + voxelSize, voxelPosition.y - voxelSize, voxelPosition.z - voxelSize);
 		glm::vec3 h(voxelPosition.x + voxelSize, voxelPosition.y - voxelSize, voxelPosition.z + voxelSize);
 
-		glm::vec3 lasta(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
-		glm::vec3 lastb(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
-		glm::vec3 lastc(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 lastd(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 laste(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
-		glm::vec3 lastf(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 lastg(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
-
-
-		if (a == lasta)
-		{
-			a = null;
-			point.push_back(a);
-		}
-		else
-			point.push_back(a);
-
-
-		if (b == lastb)
-		{
-			b = null;
-			point.push_back(b);
-		}
-		else
-			point.push_back(b);
-
-		if (c == lastc)
-		{
-			c = null;
-			point.push_back(c);
-		}
-		else
-			point.push_back(c);
-
-		if (d == lastd)
-		{
-			d = null;
-			point.push_back(d);
-		}
-		else
-			point.push_back(d);
-
-		if (e == laste)
-		{
-			e = null;
-			point.push_back(e);
-		}
-		else
-			point.push_back(e);
-
-		if (f == lastf)
-		{
-			f = null;
-			point.push_back(f);
-		}
-		else
-			point.push_back(f);
-
-		if (g == lastg)
-		{
-			g = null;
-			point.push_back(g);
-		}
-		else
-			point.push_back(g);
-
-		if (h == lasth)
-		{
-			h = null;
-			point.push_back(h);
-		}
-		else
-			point.push_back(h);
+		point.push_back(a); point.push_back(b); point.push_back(c); point.push_back(d); point.push_back(e); point.push_back(f); point.push_back(g); point.push_back(h);
 
 		grassMesh.addCubeFromFace(point, colour);
 	}
@@ -190,79 +103,8 @@ void Terrain::placeCube(Mesh& grassMesh, Mesh& mountainMesh, glm::vec3& voxelPos
 		// Offset the mountain terrain to be lighter at the top
 		glm::vec3 colour(voxelPosition.y / 50, voxelPosition.y / 50, voxelPosition.y / 50);
 
-		glm::vec3 lasta(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
-		glm::vec3 lastb(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z + voxelSize);
-		glm::vec3 lastc(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 lastd(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y + voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 laste(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
-		glm::vec3 lastf(lastVoxelPosition.x - voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 lastg(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z - voxelSize);
-		glm::vec3 lasth(lastVoxelPosition.x + voxelSize, lastVoxelPosition.y - voxelSize, lastVoxelPosition.z + voxelSize);
-
-		if (a == lasta)
-		{
-			a = null;
-			point.push_back(a);
-		}
-		else
-			point.push_back(a);
-
-
-		if (b == lastb)
-		{
-			b = null;
-			point.push_back(b);
-		}
-		else
-			point.push_back(b);
-
-		if (c == lastc)
-		{
-			c = null;
-			point.push_back(c);
-		}
-		else
-			point.push_back(c);
-
-		if (d == lastd)
-		{
-			d = null;
-			point.push_back(d);
-		}
-		else
-			point.push_back(d);
-
-		if (e == laste)
-		{
-			e = null;
-			point.push_back(e);
-		}
-		else
-			point.push_back(e);
-
-		if (f == lastf)
-		{
-			f = null;
-			point.push_back(f);
-		}
-		else
-			point.push_back(f);
-
-		if (g == lastg)
-		{
-			g = null;
-			point.push_back(g);
-		}
-		else
-			point.push_back(g);
-
-		if (h == lasth)
-		{
-			h = null;
-			point.push_back(h);
-		}
-		else
-			point.push_back(h);
+		//Push back the points
+		point.push_back(a); point.push_back(b); point.push_back(c); point.push_back(d); point.push_back(e); point.push_back(f); point.push_back(g); point.push_back(h);
 
 		mountainMesh.addCubeFromFace(point, colour);
 	}

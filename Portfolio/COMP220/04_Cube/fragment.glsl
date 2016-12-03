@@ -13,8 +13,6 @@ uniform vec3 ObjectColor;
 uniform float LightPower;
 uniform vec3 lightPos;
 
-// TODO: calculate distance
-
 
 out vec4 fragmentColour;
 
@@ -33,7 +31,7 @@ void main()
 	vec3 E = normalize(eyeDirection);
 	vec3 R = (-lightDirection, normal);
 	vec3 lightDirectionNorm = normalize(lightDirection);
-	vec3 Diffuse = (colour * LightColor * LightColor * cosTheta);
+	vec3 Diffuse = (colour * LightColor * cosTheta);
 
 	// Calculate Attenuation
 	float distance = length(lightPos - n);
