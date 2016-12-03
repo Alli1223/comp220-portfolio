@@ -176,7 +176,7 @@ void World::createWorld()
 	Terrain terrain;
 	Player_Movement playerMovement;
 
-	/////// Generate the terrain ///////////////
+	// Generate the terrain then create the buffers
 	terrain.generateTerrain(grassMesh, mountainMesh);
 	grassMesh.createBuffers();
 	mountainMesh.createBuffers();
@@ -191,7 +191,6 @@ void World::createWorld()
 	GLuint LightColor = glGetUniformLocation(programID, "LightColor");
 	GLuint ObjectColor = glGetUniformLocation(programID, "ObjectColor");
 	GLuint LightPower = glGetUniformLocation(programID, "LightPower");
-	GLuint distance = glGetUniformLocation(programID, "distance");
 	GLuint LightPos = glGetUniformLocation(programID, "LightPos");
 
 	glEnable(GL_DEPTH_TEST);
@@ -201,7 +200,7 @@ void World::createWorld()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glEnable(GL_LIGHTING);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 	// Vec4 of players start pos
 	glm::vec4 playerPosition(PlayerStartX, PlayerStartY, PlayerStartZ, 1);
@@ -213,17 +212,17 @@ void World::createWorld()
 	bool running = true;
 	while (running)
 	{
-		SDL_Event ev;
-		while (SDL_PollEvent(&ev))
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
 		{
-			switch (ev.type)
+			switch (event.type)
 			{
 			case SDL_QUIT:
 				running = false;
 				break;
 
 			case SDL_KEYDOWN:
-				switch (ev.key.keysym.sym)
+				switch (event.key.keysym.sym)
 				{
 				case SDLK_ESCAPE:
 					running = false;

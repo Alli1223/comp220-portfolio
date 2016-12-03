@@ -12,9 +12,6 @@ public:
 	Terrain();
 	//! Destructor
 	~Terrain();
-	
-	//! Generates a chunk (in-progress)
-	void generateChunk(Mesh& grassMesh, Mesh& mountainMesh);
 
 	//! Generates the terrain
 	void generateTerrain(Mesh& mesh, Mesh& snowTexture);
@@ -45,8 +42,8 @@ public:
 
 private:
 	//! How many voxels the world is made of
-	const float terrainWidth = 700;
-	const float terrainDepth = 600;
+	const float terrainWidth = 100;
+	const float terrainDepth = 100;
 
 	//! Changes how amplified the perlin noise is
 	const float noiseMax = 3;
