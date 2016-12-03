@@ -254,17 +254,13 @@ void World::createWorld()
 		// Transform matrix
 		glm::mat4 transform;
 
-		// Uncomment to apply rotation and translation to the terrain
-		//transform = glm::translate(transform, glm::vec3(varyingPower * 10, 0, 0));
-		//transform = glm::rotate(transform, glm::radians(-90.0f), glm::vec3(1, 0, 0)); 
-
 		// Calcualte the MVP matrix and pass it in
 		glm::mat4 mvp = projection * view * transform;
 		glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
 
 		// Set player height to the floor height
-		//if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
-		//	playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
+		if (playerPosition.x > 0 && playerPosition.x < terrain.getTerrainWidth() && playerPosition.z > 0 && playerPosition.z < terrain.getTerrainDepth())
+			playerPosition.y = terrain.getHeight(playerPosition.x, playerPosition.z) + playerheight;
 
 		////////////// Lighting Variables /////////////////
 		// Changes specular value and light power
@@ -279,7 +275,7 @@ void World::createWorld()
 		glm::vec3 objectColour(colour.r, colour.g, colour.b);
 
 		// The position of the light
-		glm::vec3 lightPos(playerPosition.x, playerPosition.y, playerPosition.z);
+		glm::vec3 lightPos(1, 1, 1);
 
 		// Passing in the values to the fragment shader
 		glUniform3f(lightDirectionLocation, 100, -5, 1);
@@ -298,6 +294,5 @@ void World::createWorld()
 		mountainMesh.draw();
 		SDL_GL_SwapWindow(window);
 	}
-
 }
 

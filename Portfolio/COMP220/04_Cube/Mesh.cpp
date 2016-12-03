@@ -83,8 +83,6 @@ void Mesh::addCubeFromFace(const std::vector<glm::vec3>& cubePoint, const glm::v
 {
 	glm::vec3 null(0, 0, 0);
 
-	
-
 	// Dont render face when all points are eual to null
 	if (cubePoint[0] != null && cubePoint[1] != null && cubePoint[2] != null && cubePoint[3] != null)
 		addSquare(cubePoint[0], cubePoint[1], cubePoint[2], cubePoint[3], colour, 0.25f, 0.5f, 0.0f, 0.25f);
